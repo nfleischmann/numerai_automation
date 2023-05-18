@@ -1,12 +1,16 @@
-import os
+import configparser
 import numerapi
 import pandas as pd
 import torch
 import json
 
+# Read the config file
+config = configparser.ConfigParser()
+config.read('config.ini')
+public_id = config.get('NumerAPI', 'PublicID')
+secret_key = config.get('NumerAPI', 'SecretKey')
+
 # Set up NumerAPI
-public_id = os.getenv('NUMERAI_PUBLIC_ID')
-secret_key = os.getenv('NUMERAI_SECRET_KEY')
 napi = numerapi.NumerAPI(public_id, secret_key)
 
 # Step 1: Download new data from Numerai API

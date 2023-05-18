@@ -49,18 +49,6 @@ This guide outlines the steps required to set up an EC2 instance and run the `se
    ./setup.sh
    ```
 
-   Do the same for the set_env script. The script will prompt you to enter values for the required environment variables.
-   ```bash
-   chmod +x setup_env.sh
-   ```
-   ```bash
-   ./setup_env.sh
-   ```
-
-   - `NUMERAI_PUBLIC_ID`: Enter your Numerai public ID.
-   - `NUMERAI_SECRET_KEY`: Enter your Numerai secret key.
-
-
 5. **Start the Flask server:**
 
    The setup process is complete. You can start the Flask server by running the following command:
