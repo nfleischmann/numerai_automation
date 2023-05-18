@@ -1,13 +1,11 @@
 from flask import Flask, request, abort
-import boto3
 import json
 import os
 
 app = Flask(__name__)
 
-# boto3 S3 client
-s3_client = boto3.client('s3')
-bucket_name = os.getenv('BUCKET_NAME')
+# Local models directory
+models_dir = 'models'
 
 # Load model data from file
 with open('model_data.json', 'r') as f:
@@ -15,20 +13,22 @@ with open('model_data.json', 'r') as f:
 
 @app.route('/upload_model', methods=['POST'])
 def upload_model():
-    # Check if file and name are provided
-    if 'file' not in request.files or 'name' not in request.form:
-        abort(400, description="Both file and name must be provided")
+    # Check if file, name, and numeral_id are provided
+    if 'file' not in request.files or 'name' not in request.form or 'numeral_id' not in request.form:
+        abort(400, description="File, name and numeral_id must be provided")
 
     file = request.files['file']
     name = request.form['name']
+    numeral_id = request.form['numeral_id']
 
-    # Save file to S3
-    s3_client.upload_fileobj(file, bucket_name, f'{name}.pt')
+    # Save file locally
+    file.save(os.path.join(models_dir, f'{name}.pt'))
 
     # Save model data
     model_data.append({
         'name': name,
-        's3_location': f's3://{bucket_name}/{name}.pt'
+        'numeral_id': numeral_id,
+        'location': f'{models_dir}/{name}.pt'
     })
 
     # Write model data to file
@@ -45,8 +45,8 @@ def delete_model():
     if not any(d['name'] == name for d in model_data):
         abort(400, description="Model name not found")
 
-    # Delete file from S3
-    s3_client.delete_object(Bucket=bucket_name, Key=f'{name}.pt')
+    # Delete file locally
+    os.remove(os.path.join(models_dir, f'{name}.pt'))
 
     # Remove model data
     model_data[:] = [d for d in model_data if d.get('name') != name]
@@ -60,4 +60,4 @@ def delete_model():
 @app.route('/list_models', methods=['GET'])
 def list_models():
     # Return model data as JSON
-    return json.dumps(model_data), 200
+    return json.dumps(model_data), 200 

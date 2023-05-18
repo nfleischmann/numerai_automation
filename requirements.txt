@@ -1,5 +1,6 @@
 flask
-boto3
 numerapi
+pyarrow
+fastparquet
 pandas
 torch==2.0.0
