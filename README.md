@@ -6,7 +6,6 @@ This guide outlines the steps required to set up an EC2 instance and run the `se
 
 - An EC2 instance running Amazon Linux.
 - Internet access from the EC2 instance.
-- The EC2 instance needs full access to S3.
 
 ## Setup Steps
 
@@ -42,7 +41,7 @@ This guide outlines the steps required to set up an EC2 instance and run the `se
     cd numerai_automation
     ```
     Next, grant the necessary permissions:
-    ```bash
+   ```bash
    chmod +x setup.sh
    ```
    Finally, run the script:
@@ -50,23 +49,23 @@ This guide outlines the steps required to set up an EC2 instance and run the `se
    ./setup.sh
    ```
 
-   This script will prompt you to enter values for the required environment variables.
+   Do the same for the set_env script. The script will prompt you to enter values for the required environment variables.
+   ```bash
+   chmod +x setup_env.sh
+   ```
+   ```bash
+   ./setup_env.sh
+   ```
 
-   - `BUCKET_NAME`: Enter the desired bucket name.
    - `NUMERAI_PUBLIC_ID`: Enter your Numerai public ID.
    - `NUMERAI_SECRET_KEY`: Enter your Numerai secret key.
 
-   Note: Make sure to have the necessary permissions and credentials to access the specified S3 bucket.
 
 5. **Start the Flask server:**
 
    The setup process is complete. You can start the Flask server by running the following command:
 
    ```bash
-   nohup flask run --host=0.0.0.0 --port=80 &
+   flask run --host=0.0.0.0 --port=80
    ```
-
-   The server will run in the background, allowing you to access it using the public IP or domain name of your EC2 instance.
-
-   **Note:** Ensure that the necessary security groups and firewall rules are configured to allow incoming traffic on port 80.
 
