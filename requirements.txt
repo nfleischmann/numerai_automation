@@ -1,0 +1,5 @@
+flask==2.1.0
+boto3==1.20.24
+numerapi==2.9.1
+pandas==1.4.0
+torch==1.11.0

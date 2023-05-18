@@ -6,7 +6,7 @@ This guide outlines the steps required to set up an EC2 instance and run the `se
 
 - An EC2 instance running Amazon Linux.
 - Internet access from the EC2 instance.
-- The EC2 instance needs full access to S3
+- The EC2 instance needs full access to S3.
 
 ## Setup Steps
 
@@ -36,10 +36,17 @@ This guide outlines the steps required to set up an EC2 instance and run the `se
 
 4. **Run the `setup.sh` script:**
 
-   Execute the `setup.sh` script to install dependencies and configure the environment variables:
-
+   This script installs the necessary dependencies and configures the environment variables:
+   First, navigate to the repository's directory:
+    ```bash
+    cd numerai_automation
+    ```
+    Next, grant the necessary permissions:
+    ```bash
+   chmod +x setup.sh
+   ```
+   Finally, run the script:
    ```bash
-   cd numerai_automation
    ./setup.sh
    ```
 
